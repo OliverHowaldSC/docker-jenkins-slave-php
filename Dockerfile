@@ -27,6 +27,18 @@ RUN \
   rm -rf /config/init/10-nginx-data-dirs.sh /etc/supervisor.d/nginx.conf /etc/supervisor.d/php-fpm.conf && \
   echo > /etc/sysconfig/i18n
 
+# - Install Node.js
+# - Install Grunt, Gulp, Yeoman
+# - Install Compass
+RUN \
+  yum install -y nodejs && \
+  yum clean all && \
+  npm install -g grunt-cli && \
+  gem install compass && \
+  npm install -g gulp && \
+  npm install -g yo
+
+ENV version=23
 # Add config/init scripts to run after container has been started
 ADD container-files /
 
