@@ -1,5 +1,5 @@
-FROM million12/nginx-php:latest
-MAINTAINER Marcin Ryzycki marcin@m12.io
+FROM million12/behat-selenium:latest
+MAINTAINER Jonas Renggli <jonas.renggli@swisscom.com>
 
 # - Install OpenSSH server
 # - Generate required host keys
