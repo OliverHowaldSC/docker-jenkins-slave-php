@@ -20,3 +20,9 @@ else
     su www -c "/github-keys.sh $user"
   done
 fi
+
+if [ -z "${SSH_PUB_KEY+xxx}" ] || [ -z "${SSH_PUB_KEY}" ]; then
+  echo "WARNING: env variable \$SSH_PUB_KEY is not set. Please set it to have access to this container via SSH."
+else
+  su www -c "/ssh-key.sh \"${SSH_PUB_KEY}\""
+fi
