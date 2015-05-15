@@ -38,6 +38,13 @@ RUN \
   npm install -g gulp && \
   npm install -g yo
 
+# - Install cloudfoundry cli
+RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws.com/releases/v6.11.2/cf-linux-amd64.tgz &&\
+    tar xvf /tmp/cf-linux-amd64.tgz -C /tmp && \
+    mv /tmp/cf /usr/local/bin/cf && \
+    rm /tmp/cf-linux-amd64.tgz && \
+    cf install-plugin https://swisscom-plugin.nova.scapp.io/ubuntu64/swisscom-plugin
+
 ENV version=23
 # Add config/init scripts to run after container has been started
 ADD container-files /
