@@ -27,23 +27,30 @@ RUN \
   rm -rf /config/init/10-nginx-data-dirs.sh /etc/supervisor.d/nginx.conf /etc/supervisor.d/php-fpm.conf && \
   echo > /etc/sysconfig/i18n
 
-# - Install Node.js
-# - Install Grunt, Gulp, Yeoman
-# - Install Compass
+# first install nodejs to get npm
 RUN \
-  yum install -y nodejs && \
-  yum clean all && \
-  npm install -g grunt-cli && \
-  gem install compass && \
-  npm install -g gulp && \
-  npm install -g yo
+    yum install -y nodejs && \
+    yum clean all
+
+# now, let's get a new node release ;-) see https://github.com/ForbesLindesay/spawn-sync/issues/24
+RUN \
+    npm cache clean -f && \
+    npm install -g n && \
+    n stable
+
+# install our stuff
+RUN \
+    npm install -g grunt-cli && \
+    gem install compass && \
+    npm install -g gulp && \
+    npm install -g yo
 
 # - Install cloudfoundry cli
 RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws.com/releases/v6.11.2/cf-linux-amd64.tgz &&\
     tar xvf /tmp/cf-linux-amd64.tgz -C /tmp && \
     mv /tmp/cf /usr/local/bin/cf && \
     rm /tmp/cf-linux-amd64.tgz && \
-    cf install-plugin https://swisscom-plugin.nova.scapp.io/ubuntu64/swisscom-plugin
+    cf install-plugin https://swisscom-plugin.nova.scapp.io/linux64/swisscom-plugin
 
 ENV version=23
 # Add config/init scripts to run after container has been started
