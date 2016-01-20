@@ -45,6 +45,18 @@ RUN \
     npm install -g gulp && \
     npm install -g yo
 
+# install fontforge
+RUN yum install -y fontforge
+
+# compile ttfautohint
+RUN wget "http://sourceforge.net/projects/freetype/files/ttfautohint/1.4.1/ttfautohint-1.4.1.tar.gz/download" -O ttfautohint-1.4.1.tar.gz \
+	&& tar xzf ttfautohint-1.4.1.tar.gz \
+	&& cd ttfautohint-* \
+	&& yum install -y harfbuzz-devel qtwebkit-devel \
+	&& ./configure \
+	&& make \
+	&& make install
+
 # - Install cloudfoundry cli
 RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws.com/releases/v6.11.2/cf-linux-amd64.tgz &&\
     tar xvf /tmp/cf-linux-amd64.tgz -C /tmp && \
