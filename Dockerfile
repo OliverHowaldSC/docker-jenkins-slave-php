@@ -52,7 +52,18 @@ RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws
     rm /tmp/cf-linux-amd64.tgz && \
     cf install-plugin https://swisscom-plugin.nova.scapp.io/linux64/swisscom-plugin
 
-ENV version=23
+# Install PhantomJS
+RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 \
+	&& tar xjf phantomjs-1.9.8-linux-x86_64.tar.bz2 \
+	&& cp phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/bin/phantomjs \
+	&& rm -rf phantomjs-*
+
+# Add yslow
+RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
+	&& unzip yslow-phantomjs-3.1.8.zip \
+	&& cp yslow.js /opt/yslow.js \
+	&& rm yslow-phantomjs-3.1.8.zip
+
 # Add config/init scripts to run after container has been started
 ADD container-files /
 
