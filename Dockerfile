@@ -64,6 +64,9 @@ RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
 	&& cp yslow.js /opt/yslow.js \
 	&& rm yslow-phantomjs-3.1.8.zip
 
+# Install sitespeed.io
+RUN npm install -g sitespeed.io
+
 # Add config/init scripts to run after container has been started
 ADD container-files /
 
