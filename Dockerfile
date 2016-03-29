@@ -39,11 +39,6 @@ RUN \
     yum install -y nodejs && \
     yum clean all
 
-# install node stuff
-RUN \
-    npm install -g gulp && \
-    npm install -g yo
-
 # install fontforge
 RUN yum install -y fontforge
 
@@ -75,8 +70,8 @@ RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
 	&& cp yslow.js /opt/yslow.js \
 	&& rm yslow-phantomjs-3.1.8.zip
 
-# Install sitespeed.io
-RUN npm install -g sitespeed.io
+# install node stuff
+RUN npm install -g gulp grunt-cli yo sitespeed.io
 
 # Add config/init scripts to run after container has been started
 ADD container-files /
