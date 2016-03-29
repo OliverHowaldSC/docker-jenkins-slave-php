@@ -64,9 +64,9 @@ RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws
     cf install-plugin https://swisscom-plugin.scapp.io/linux64/swisscom-plugin
 
 # Install PhantomJS
-RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 \
-	&& tar xjf phantomjs-1.9.8-linux-x86_64.tar.bz2 \
-	&& cp phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/bin/phantomjs \
+RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-i686.tar.bz2 \
+	&& tar xjf phantomjs-2.1.1-linux-i686.tar.bz2 \
+	&& cp phantomjs-2.1.1-linux-i686/bin/phantomjs /usr/bin/phantomjs \
 	&& rm -rf phantomjs-*
 
 # Add yslow
