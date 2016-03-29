@@ -27,21 +27,20 @@ RUN \
   rm -rf /config/init/10-nginx-data-dirs.sh /etc/supervisor.d/nginx.conf /etc/supervisor.d/php-fpm.conf && \
   echo > /etc/sysconfig/i18n
 
-# first install nodejs to get npm
+# install our ruby stuff
 RUN \
+    gem install compass
+
+# first install nodejs to get npm (using a current version from nodesource)
+RUN \
+    curl -sL https://rpm.nodesource.com/setup_5.x -o /tmp/nodesource.sh && \
+    bash /tmp/nodesource.sh && \
+    rm /tmp/nodesource.sh && \
     yum install -y nodejs && \
     yum clean all
 
-# now, let's get a new node release ;-) see https://github.com/ForbesLindesay/spawn-sync/issues/24
+# install node stuff
 RUN \
-    npm cache clean -f && \
-    npm install -g n && \
-    n stable
-
-# install our stuff
-RUN \
-    npm install -g grunt-cli && \
-    gem install compass && \
     npm install -g gulp && \
     npm install -g yo
 
