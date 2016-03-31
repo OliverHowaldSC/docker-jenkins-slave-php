@@ -1,4 +1,4 @@
-FROM million12/behat-selenium:latest
+FROM million12/php-testing:php56
 MAINTAINER Jonas Renggli <jonas.renggli@swisscom.com>
 
 # - Install OpenSSH server
