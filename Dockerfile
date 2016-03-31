@@ -27,6 +27,10 @@ RUN \
   rm -rf /config/init/10-nginx-data-dirs.sh /etc/supervisor.d/nginx.conf /etc/supervisor.d/php-fpm.conf && \
   echo > /etc/sysconfig/i18n
 
+# install Xdebug
+RUN yum install -y php56-php-pecl-xdebug \
+	&& yum clean all
+
 # install our ruby stuff
 RUN \
     gem install compass
