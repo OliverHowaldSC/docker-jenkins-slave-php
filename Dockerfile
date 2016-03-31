@@ -31,13 +31,14 @@ RUN \
 RUN \
     gem install compass
 
-# first install nodejs to get npm (using a current version from nodesource)
-RUN \
-    curl -sL https://rpm.nodesource.com/setup_5.x -o /tmp/nodesource.sh && \
-    bash /tmp/nodesource.sh && \
-    rm /tmp/nodesource.sh && \
-    yum install -y nodejs && \
-    yum clean all
+# workaround for this: https://github.com/npm/npm/issues/9863
+RUN rm -rf /usr/local/lib/node_modules/npm \
+	&& git clone https://github.com/DIREKTSPEED-LTD/npm /usr/local/lib/node_modules/npm \
+	&& rm -rf /usr/local/lib/node_modules/npm/.git \
+	&& rm -f  /usr/bin/npm \
+	&& ln -s -f /usr/local/bin/npm /usr/bin/npm \
+	&& cd /usr/local/lib/node_modules/npm \
+	&& npm install
 
 # install fontforge
 RUN yum install -y fontforge
@@ -71,7 +72,7 @@ RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
 	&& rm yslow-phantomjs-3.1.8.zip
 
 # install node stuff
-RUN npm install -g gulp grunt-cli yo sitespeed.io
+RUN npm install --unsafe-perm -g gulp grunt-cli yo sitespeed.io
 
 # Add config/init scripts to run after container has been started
 ADD container-files /
