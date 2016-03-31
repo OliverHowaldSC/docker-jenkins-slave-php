@@ -27,23 +27,17 @@ RUN \
   rm -rf /config/init/10-nginx-data-dirs.sh /etc/supervisor.d/nginx.conf /etc/supervisor.d/php-fpm.conf && \
   echo > /etc/sysconfig/i18n
 
-# first install nodejs to get npm
+# install our ruby stuff
 RUN \
+    gem install compass
+
+# first install nodejs to get npm (using a current version from nodesource)
+RUN \
+    curl -sL https://rpm.nodesource.com/setup_5.x -o /tmp/nodesource.sh && \
+    bash /tmp/nodesource.sh && \
+    rm /tmp/nodesource.sh && \
     yum install -y nodejs && \
     yum clean all
-
-# now, let's get a new node release ;-) see https://github.com/ForbesLindesay/spawn-sync/issues/24
-RUN \
-    npm cache clean -f && \
-    npm install -g n && \
-    n stable
-
-# install our stuff
-RUN \
-    npm install -g grunt-cli && \
-    gem install compass && \
-    npm install -g gulp && \
-    npm install -g yo
 
 # install fontforge
 RUN yum install -y fontforge
@@ -65,9 +59,9 @@ RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws
     cf install-plugin https://swisscom-plugin.scapp.io/linux64/swisscom-plugin
 
 # Install PhantomJS
-RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 \
-	&& tar xjf phantomjs-1.9.8-linux-x86_64.tar.bz2 \
-	&& cp phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/bin/phantomjs \
+RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-i686.tar.bz2 \
+	&& tar xjf phantomjs-2.1.1-linux-i686.tar.bz2 \
+	&& cp phantomjs-2.1.1-linux-i686/bin/phantomjs /usr/bin/phantomjs \
 	&& rm -rf phantomjs-*
 
 # Add yslow
@@ -76,8 +70,8 @@ RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
 	&& cp yslow.js /opt/yslow.js \
 	&& rm yslow-phantomjs-3.1.8.zip
 
-# Install sitespeed.io
-RUN npm install -g sitespeed.io
+# install node stuff
+RUN npm install -g gulp grunt-cli yo sitespeed.io
 
 # Add config/init scripts to run after container has been started
 ADD container-files /
