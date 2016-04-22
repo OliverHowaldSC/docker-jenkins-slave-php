@@ -29,7 +29,9 @@ RUN \
 
 # install Xdebug
 RUN yum install -y php56-php-pecl-xdebug \
-	&& yum clean all
+	&& yum clean all \
+	&& ln -s /opt/remi/php56/root/usr/lib64/php/modules/xdebug.so /usr/lib64/php/modules/ \
+	&& cp /opt/remi/php56/root/etc/php.d/15-xdebug.ini /etc/php.d/
 
 # install our ruby stuff
 RUN \
