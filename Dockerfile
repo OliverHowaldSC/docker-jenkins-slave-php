@@ -59,11 +59,11 @@ RUN wget "http://sourceforge.net/projects/freetype/files/ttfautohint/1.4.1/ttfau
 	&& make install
 
 # - Install cloudfoundry cli
-RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws.com/releases/v6.11.2/cf-linux-amd64.tgz &&\
+RUN curl -o /tmp/cf-linux-amd64.tgz https://s3.amazonaws.com/go-cli/releases/v6.19.0/cf-cli_6.19.0_linux_x86-64.tgz &&\
     tar xvf /tmp/cf-linux-amd64.tgz -C /tmp && \
     mv /tmp/cf /usr/local/bin/cf && \
     rm /tmp/cf-linux-amd64.tgz && \
-    cf install-plugin https://swisscom-plugin.scapp.io/linux64/swisscom-plugin
+    cf install-plugin -f https://swisscom-plugin.scapp.io/linux64/swisscom-plugin
 
 # Install PhantomJS
 RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-i686.tar.bz2 \
@@ -78,7 +78,7 @@ RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
 	&& rm yslow-phantomjs-3.1.8.zip
 
 # install node stuff
-RUN npm install --unsafe-perm -g gulp grunt-cli yo sitespeed.io
+RUN npm install --unsafe-perm -g slimerjs@0.906.2 gulp grunt-cli yo sitespeed.io
 
 # Add config/init scripts to run after container has been started
 ADD container-files /
