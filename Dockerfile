@@ -59,7 +59,7 @@ RUN wget "http://sourceforge.net/projects/freetype/files/ttfautohint/1.4.1/ttfau
 	&& make install
 
 # - Install cloudfoundry cli
-RUN curl -o /tmp/cf-linux-amd64.tgz http://go-cli.s3-website-us-east-1.amazonaws.com/releases/v6.11.2/cf-linux-amd64.tgz &&\
+RUN curl -o /tmp/cf-linux-amd64.tgz https://s3.amazonaws.com/go-cli/releases/v6.19.0/cf-cli_6.19.0_linux_x86-64.tgz &&\
     tar xvf /tmp/cf-linux-amd64.tgz -C /tmp && \
     mv /tmp/cf /usr/local/bin/cf && \
     rm /tmp/cf-linux-amd64.tgz && \
