@@ -63,7 +63,7 @@ RUN curl -o /tmp/cf-linux-amd64.tgz https://s3.amazonaws.com/go-cli/releases/v6.
     tar xvf /tmp/cf-linux-amd64.tgz -C /tmp && \
     mv /tmp/cf /usr/local/bin/cf && \
     rm /tmp/cf-linux-amd64.tgz && \
-    cf install-plugin https://swisscom-plugin.scapp.io/linux64/swisscom-plugin
+    cf install-plugin -f https://swisscom-plugin.scapp.io/linux64/swisscom-plugin
 
 # Install PhantomJS
 RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-i686.tar.bz2 \
