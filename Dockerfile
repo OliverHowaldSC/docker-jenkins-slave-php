@@ -78,7 +78,7 @@ RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
 	&& rm yslow-phantomjs-3.1.8.zip
 
 # install node stuff
-RUN npm install --unsafe-perm -g slimerjs@0.906.2 gulp grunt-cli yo sitespeed.io
+RUN npm install --unsafe-perm -g gulp grunt-cli yo
 
 # Add config/init scripts to run after container has been started
 ADD container-files /
