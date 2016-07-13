@@ -1,4 +1,4 @@
-FROM million12/php-testing:php56
+FROM million12/php-testing:php70
 MAINTAINER Jonas Renggli <jonas.renggli@swisscom.com>
 
 # - Install OpenSSH server
@@ -28,10 +28,10 @@ RUN \
   echo > /etc/sysconfig/i18n
 
 # install Xdebug
-RUN yum install -y php56-php-pecl-xdebug \
-	&& yum clean all \
-	&& ln -s /opt/remi/php56/root/usr/lib64/php/modules/xdebug.so /usr/lib64/php/modules/ \
-	&& cp /opt/remi/php56/root/etc/php.d/15-xdebug.ini /etc/php.d/
+#RUN yum install -y php70-php-pecl-xdebug \
+#	&& yum clean all \
+#	&& ln -s /opt/remi/php70/root/usr/lib64/php/modules/xdebug.so /usr/lib64/php/modules/ \
+#	&& cp /opt/remi/php70/root/etc/php.d/15-xdebug.ini /etc/php.d/
 
 # install our ruby stuff
 RUN \
@@ -76,6 +76,11 @@ RUN wget http://yslow.org/yslow-phantomjs-3.1.8.zip \
 	&& unzip yslow-phantomjs-3.1.8.zip \
 	&& cp yslow.js /opt/yslow.js \
 	&& rm yslow-phantomjs-3.1.8.zip
+
+# Fix bug https://github.com/npm/npm/issues/9863
+RUN cd $(npm root -g)/npm \
+	&& npm install fs-extra \
+	&& sed -i -e s/graceful-fs/fs-extra/ -e s/fs\.rename/fs.move/ ./lib/utils/rename.js
 
 # install node stuff
 RUN npm install --unsafe-perm -g gulp grunt-cli yo sitespeed.io@04.0.0-alpha.5
