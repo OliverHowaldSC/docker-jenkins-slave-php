@@ -27,7 +27,8 @@ RUN \
   rm -rf /config/init/10-nginx-data-dirs.sh /etc/supervisor.d/nginx.conf /etc/supervisor.d/php-fpm.conf && \
   echo > /etc/sysconfig/i18n
 
-RUN yum install -y php-xml \
+# Install additional php modules
+RUN yum install -y php-xml php-soap \
 	&& yum clean all
 
 # install Xdebug
