@@ -85,6 +85,9 @@ RUN cd $(npm root -g)/npm \
 # install node stuff
 RUN npm install --unsafe-perm -g gulp grunt-cli yo sitespeed.io@04.0.0-alpha.5
 
+# Create symlinks in /usr/local/bin
+RUN find /usr/local/nvm/versions/node/v5.10.1/bin -type f -o -type l | while read F; do ln -s $F /usr/local/bin/$(basename $F); done
+
 # Add config/init scripts to run after container has been started
 ADD container-files /
 
