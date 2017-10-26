@@ -50,7 +50,7 @@ RUN rm -rf /usr/local/lib/node_modules/npm \
 	&& cd /usr/local/lib/node_modules/npm \
 	&& npm install
 
-RUN yum install -y fontforge
+RUN yum install -y fontforge java-1.8.0-openjdk
 
 RUN set -ex; \
   wget "https://sourceforge.net/projects/freetype/files/freetype2/2.8.1/freetype-2.8.1.tar.gz/download" -O freetype-2.8.1.tar.gz; \
