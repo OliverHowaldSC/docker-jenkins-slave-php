@@ -14,7 +14,7 @@ RUN \
   ssh-keygen -q -b 1024 -N '' -t rsa -f /etc/ssh/ssh_host_rsa_key && \
   ssh-keygen -q -b 1024 -N '' -t dsa -f /etc/ssh/ssh_host_dsa_key && \
   ssh-keygen -q -b 521 -N '' -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key && \
-  
+
   sed -i -r 's/.?UseDNS\syes/UseDNS no/' /etc/ssh/sshd_config && \
   sed -i -r 's/.?PasswordAuthentication.+/PasswordAuthentication no/' /etc/ssh/sshd_config && \
   sed -i -r 's/.?UsePAM.+/UsePAM no/' /etc/ssh/sshd_config && \
@@ -50,8 +50,15 @@ RUN rm -rf /usr/local/lib/node_modules/npm \
 	&& cd /usr/local/lib/node_modules/npm \
 	&& npm install
 
-# install fontforge
 RUN yum install -y fontforge
+
+RUN set -ex; \
+  wget "https://sourceforge.net/projects/freetype/files/freetype2/2.8.1/freetype-2.8.1.tar.gz/download" -O freetype-2.8.1.tar.gz; \
+  tar xzf freetype-2.8.1.tar.gz; \
+  cd freetype-*; \
+  ./configure; \
+  make; \
+  make install
 
 # compile ttfautohint
 RUN wget "http://sourceforge.net/projects/freetype/files/ttfautohint/1.4.1/ttfautohint-1.4.1.tar.gz/download" -O ttfautohint-1.4.1.tar.gz \
